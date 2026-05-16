@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fagus Projekt — Montažne kuće po meri</title>
+
+<!-- Google Fonts: Playfair Display (headlines) + DM Sans (body) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ===== PAGE LOADER ===== -->
+<div id="page-loader">
+  <div class="loader-logo">FAGUS</div>
+</div>
+
+<!-- ===== ZOOM TRANSITION OVERLAY ===== -->
+<div id="zoom-overlay"></div>
+
+<!-- ===== NAVIGATION ===== -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Fagus Projekt</a>
+  <ul class="nav-links">
+    <li><a href="#about">O nama</a></li>
+    <li><a href="#process">Proces</a></li>
+    <li><a href="#services">Usluge</a></li>
+    <li><a href="#gallery">Projekti</a></li>
+    <li><a href="#contact" class="nav-cta">Zatražite ponudu</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Meni">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile nav -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#about" class="mobile-link">O nama</a>
+  <a href="#process" class="mobile-link">Proces</a>
+  <a href="#services" class="mobile-link">Usluge</a>
+  <a href="#gallery" class="mobile-link">Projekti</a>
+  <a href="#why" class="mobile-link">Zašto mi</a>
+  <a href="#contact" class="mobile-link">Kontakt</a>
+</div>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<!-- ===== HERO ===== -->
+<section id="hero">
+  <!-- Text content -->
+  <div class="hero-content" id="heroContent">
+    <div class="hero-badge">Ivanjica, Srbija — od 2008.</div>
+    <h1 class="hero-headline">
+      Vaš dom iz snova<br><em>počinje ovde</em>
+    </h1>
+    <p class="hero-sub">
+      Projektovanje i izgradnja montažnih kuća po meri — brzo, pouzdano i kvalitetno. Od ideje do ključa u ruke.
+    </p>
+    <div class="hero-buttons">
+      <a href="#gallery" class="btn btn-primary">Pogledajte projekte</a>
+      <button class="btn btn-secondary" id="enterHouseBtn" onclick="triggerDoorAnimation()">
+        <span>🚪</span> Uđite u kuću
+      </button>
+    </div>
+  </div>
+
+  <!-- SVG HOUSE ILLUSTRATION -->
+  <div class="hero-house" id="heroHouse">
+    <svg viewBox="0 0 780 560" xmlns="http://www.w3.org/2000/svg" id="houseSvg">
+      <defs>
+        <linearGradient id="woodGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#d4a96e"/>
+          <stop offset="50%" style="stop-color:#b8895a"/>
+          <stop offset="100%" style="stop-color:#8b6914"/>
+        </linearGradient>
+        <linearGradient id="wallGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#f5ede0"/>
+          <stop offset="100%" style="stop-color:#e8daca"/>
+        </linearGradient>
+        <linearGradient id="roofGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#2a3a2e"/>
+          <stop offset="100%" style="stop-color:#1a2520"/>
+        </linearGradient>
+        <linearGradient id="groundGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#3a5a30"/>
+          <stop offset="100%" style="stop-color:#2a3a20"/>
+        </linearGradient>
+        <radialGradient id="winGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" style="stop-color:#ffe8a0;stop-opacity:0.9"/>
+          <stop offset="100%" style="stop-color:#f0c060;stop-opacity:0.4"/>
+        </radialGradient>
+        <!-- Door interior warm light — revealed when door opens -->
+        <radialGradient id="doorInteriorGrad" cx="50%" cy="40%" r="70%">
+          <stop offset="0%" style="stop-color:#fff5d0"/>
+          <stop offset="40%" style="stop-color:#ffe090"/>
+          <stop offset="100%" style="stop-color:#c87820;stop-opacity:0.5"/>
+        </radialGradient>
+        <!-- Bloom gradient for light radiating from doorway -->
+        <radialGradient id="bloomGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" style="stop-color:#ffe8a0;stop-opacity:0.9"/>
+          <stop offset="50%" style="stop-color:#ffcc60;stop-opacity:0.4"/>
+          <stop offset="100%" style="stop-color:#f0a020;stop-opacity:0"/>
+        </radialGradient>
+        <filter id="bloomFilter" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="18"/>
+        </filter>
+      </defs>
+
+      <!-- Ground / grass -->
+      <ellipse cx="390" cy="530" rx="340" ry="42" fill="url(#groundGrad)" opacity="0.85"/>
+
+      <!-- Background trees — positioned so none protrude awkwardly beside house -->
+      <g opacity="0.45">
+        <!-- Far left tree — trunk starts at x=68, well left of house at x=158 -->
+        <rect x="68" y="360" width="12" height="112" fill="#3d2a10" rx="2"/>
+        <ellipse cx="74" cy="348" rx="30" ry="44" fill="#1a3020"/>
+        <ellipse cx="74" cy="324" rx="21" ry="34" fill="#223a2a"/>
+        <!-- Far right tree -->
+        <rect x="690" y="368" width="12" height="104" fill="#3d2a10" rx="3"/>
+        <ellipse cx="696" cy="357" rx="28" ry="42" fill="#1a3020"/>
+        <ellipse cx="696" cy="336" rx="20" ry="32" fill="#223a2a"/>
+        <!-- Smaller mid-right tree -->
+        <rect x="630" y="408" width="8" height="74" fill="#3d2a10" rx="2"/>
+        <ellipse cx="634" cy="403" rx="18" ry="26" fill="#1a3020"/>
+        <!-- Smaller mid-left tree — keep trunk x well left of house -->
+        <rect x="118" y="418" width="8" height="64" fill="#3d2a10" rx="2"/>
+        <ellipse cx="122" cy="413" rx="16" ry="22" fill="#1a3020"/>
+      </g>
+
+      <!-- Ground shadow — drawn manually so no filter bounding-box artifact -->
+      <ellipse cx="395" cy="485" rx="220" ry="22" fill="#050e07" opacity="0.35"/>
+
+      <!-- ===== MAIN HOUSE BODY ===== -->
+      <g>
+
+        <!-- Foundation slab -->
+        <rect x="158" y="472" width="430" height="18" rx="4" fill="#8b7a5a"/>
+
+        <!-- RIGHT SIDE WALL — kept tight, no overrun -->
+        <polygon points="588,148 632,168 632,472 588,472" fill="#ddd0bc"/>
+        <!-- Side wall shading -->
+        <polygon points="588,148 632,168 632,300 588,280" fill="#c8baa8" opacity="0.5"/>
+
+        <!-- MAIN FACADE WALL -->
+        <rect x="158" y="148" width="430" height="324" rx="3" fill="url(#wallGrad)"/>
+
+        <!-- Wood cladding planks -->
+        <g fill="none" stroke="#c8b098" stroke-width="1" opacity="0.45">
+          <line x1="158" y1="178" x2="588" y2="178"/>
+          <line x1="158" y1="208" x2="588" y2="208"/>
+          <line x1="158" y1="238" x2="588" y2="238"/>
+          <line x1="158" y1="268" x2="588" y2="268"/>
+          <line x1="158" y1="298" x2="588" y2="298"/>
+          <line x1="158" y1="328" x2="588" y2="328"/>
+          <line x1="158" y1="358" x2="588" y2="358"/>
+          <line x1="158" y1="388" x2="588" y2="388"/>
+          <line x1="158" y1="418" x2="588" y2="418"/>
+          <line x1="158" y1="448" x2="588" y2="448"/>
+        </g>
+
+        <!-- ===== ROOF ===== -->
+        <!-- Main roof shape: front face only, clean polygon -->
+        <polygon points="130,150 390,48 632,168 588,148 390,72 158,148" fill="url(#roofGrad)"/>
+        <!-- Left overhang dark underside -->
+        <polygon points="130,150 158,148 158,162 130,165" fill="#0e1810"/>
+        <!-- Right overhang dark underside -->
+        <polygon points="588,148 632,168 632,180 588,162" fill="#0e1810"/>
+
+        <!-- Roof trim/fascia lines -->
+        <line x1="130" y1="150" x2="588" y2="148" stroke="#c8a96e" stroke-width="3.5"/>
+        <line x1="588" y1="148" x2="632" y2="168" stroke="#c8a96e" stroke-width="3.5"/>
+
+        <!-- Roof ridge cap -->
+        <line x1="388" y1="48" x2="388" y2="70" stroke="#c8a96e" stroke-width="2" opacity="0.6"/>
+
+        <!-- Chimney — INSIDE the roof, positioned carefully -->
+        <rect x="470" y="88" width="30" height="62" rx="2" fill="#c8b098"/>
+        <rect x="466" y="84" width="38" height="10" rx="2" fill="#b0987a"/>
+        <!-- Smoke wisps — small and subtle -->
+        <g opacity="0.22" fill="#e0d8c8">
+          <ellipse cx="485" cy="76" rx="6" ry="9"/>
+          <ellipse cx="490" cy="64" rx="5" ry="7"/>
+          <ellipse cx="483" cy="54" rx="4" ry="6"/>
+        </g>
+
+        <!-- Dormer window in roof -->
+        <polygon points="345,72 390,48 435,72" fill="#1a2520"/>
+        <rect x="360" y="72" width="60" height="38" rx="2" fill="#1e2d22"/>
+        <rect x="366" y="77" width="48" height="26" rx="1" fill="url(#winGlow)"/>
+        <line x1="390" y1="77" x2="390" y2="103" stroke="#8b6914" stroke-width="1.5"/>
+
+        <!-- ===== WINDOWS ===== -->
+        <!-- Left top window -->
+        <rect x="182" y="188" width="148" height="108" rx="4" fill="#1e2d22"/>
+        <rect x="188" y="194" width="136" height="96" rx="2" fill="url(#winGlow)" opacity="0.85"/>
+        <line x1="256" y1="194" x2="256" y2="290" stroke="#8b6914" stroke-width="2"/>
+        <line x1="188" y1="242" x2="324" y2="242" stroke="#8b6914" stroke-width="2"/>
+        <rect x="182" y="188" width="148" height="108" rx="4" fill="none" stroke="#c8a96e" stroke-width="2.5"/>
+
+        <!-- Left bottom window -->
+        <rect x="182" y="322" width="148" height="96" rx="4" fill="#1e2d22"/>
+        <rect x="188" y="328" width="136" height="84" rx="2" fill="url(#winGlow)" opacity="0.75"/>
+        <line x1="256" y1="328" x2="256" y2="412" stroke="#8b6914" stroke-width="2"/>
+        <rect x="182" y="322" width="148" height="96" rx="4" fill="none" stroke="#c8a96e" stroke-width="2.5"/>
+
+        <!-- Right large window -->
+        <rect x="390" y="188" width="148" height="174" rx="4" fill="#1e2d22"/>
+        <rect x="397" y="195" width="134" height="160" rx="2" fill="url(#winGlow)" opacity="0.8"/>
+        <line x1="464" y1="195" x2="464" y2="355" stroke="#8b6914" stroke-width="2"/>
+        <line x1="397" y1="275" x2="531" y2="275" stroke="#8b6914" stroke-width="2"/>
+        <rect x="390" y="188" width="148" height="174" rx="4" fill="none" stroke="#c8a96e" stroke-width="2.5"/>
+
+        <!-- ===== DOOR UNIT ===== -->
+        <!--
+          The light bloom sits BEHIND the door frame, centered on the doorway opening.
+          It starts invisible and grows as the door opens.
+        -->
+        <ellipse id="door-light-bloom" cx="340" cy="401" rx="30" ry="38"
+                 fill="url(#bloomGrad)" filter="url(#bloomFilter)" opacity="0"/>
+
+        <g id="door-group">
+
+          <!-- Door frame outer (brown surround) -->
+          <rect x="300" y="326" width="80" height="150" rx="3" fill="#7a5a10"/>
+
+          <!-- Door opening — dark interior background, always visible behind panel -->
+          <rect x="304" y="330" width="72" height="143" rx="1" fill="#150f05" id="door-interior-bg"/>
+
+          <!-- Interior warm glow — fades in as door opens, sits above dark bg but below panel -->
+          <rect id="door-interior-glow" x="304" y="330" width="72" height="143"
+                rx="1" fill="url(#doorInteriorGrad)" opacity="0"/>
+
+          <!--
+            Door panel as a POLYGON so we can reshape its 4 corners each frame.
+            Hinge is on the LEFT edge. Initial corners (closed):
+              top-left:  (304, 330)
+              top-right: (376, 330)
+              bot-right: (376, 473)
+              bot-left:  (304, 473)
+            As door opens, the right edge moves LEFT (foreshortens toward hinge),
+            simulating the panel rotating away. No transform needed — just update points.
+          -->
+          <polygon id="dp-panel"
+            points="304,330 376,330 376,473 304,473"
+            fill="url(#woodGrad)"/>
+
+          <!-- Panel top inset — also a polygon, redrawn by JS -->
+          <polygon id="dp-top"
+            points="311,338 369,338 369,391 311,391"
+            fill="none" stroke="#9a6a14" stroke-width="1.5"/>
+
+          <!-- Panel bottom inset — polygon -->
+          <polygon id="dp-bot"
+            points="311,399 369,399 369,462 311,462"
+            fill="none" stroke="#9a6a14" stroke-width="1.5"/>
+
+          <!-- Handle group — JS moves its x position -->
+          <g id="dp-handle">
+            <rect id="dp-hbp" x="358" y="394" width="10" height="22" rx="3" fill="#8b6914"/>
+            <circle id="dp-hknob" cx="363" cy="397" r="5" fill="#c8a96e"/>
+          </g>
+
+          <!-- Door threshold -->
+          <rect x="294" y="472" width="92" height="9" rx="2" fill="#7a5a10"/>
+          <rect x="298" y="477" width="84" height="5" rx="1" fill="#5a3e0a"/>
+        </g>
+
+        <!-- ===== DECK / VERANDA ===== -->
+        <rect x="156" y="460" width="434" height="13" rx="3" fill="url(#woodGrad)"/>
+        <!-- Railing posts — left zone (stops before door) -->
+        <g fill="#8b6914">
+          <rect x="163" y="422" width="5" height="40" rx="1"/>
+          <rect x="191" y="422" width="5" height="40" rx="1"/>
+          <rect x="219" y="422" width="5" height="40" rx="1"/>
+          <rect x="247" y="422" width="5" height="40" rx="1"/>
+          <rect x="275" y="422" width="5" height="40" rx="1"/>
+          <!-- Gap for door 300–384 -->
+          <!-- Railing posts right zone -->
+          <rect x="388" y="422" width="5" height="40" rx="1"/>
+          <rect x="416" y="422" width="5" height="40" rx="1"/>
+          <rect x="444" y="422" width="5" height="40" rx="1"/>
+          <rect x="472" y="422" width="5" height="40" rx="1"/>
+          <rect x="500" y="422" width="5" height="40" rx="1"/>
+          <rect x="528" y="422" width="5" height="40" rx="1"/>
+          <rect x="556" y="422" width="5" height="40" rx="1"/>
+          <rect x="580" y="422" width="5" height="40" rx="1"/>
+        </g>
+        <!-- Top rail left -->
+        <rect x="158" y="420" width="127" height="5" rx="2" fill="url(#woodGrad)"/>
+        <!-- Top rail right -->
+        <rect x="384" y="420" width="204" height="5" rx="2" fill="url(#woodGrad)"/>
+
+        <!-- Outdoor wall lamp post -->
+        <rect x="288" y="390" width="4" height="78" fill="#6a5030" opacity="0.8"/>
+        <polygon points="282,390 290,382 298,390" fill="#b89040" opacity="0.9"/>
+        <ellipse cx="290" cy="393" rx="6" ry="3" fill="#ffe090" opacity="0.7"/>
+
+      </g><!-- end softShadow group -->
+
+      <!-- Walkway path to door -->
+      <polygon points="322,512 298,480 382,480 358,512" fill="#b8a888" opacity="0.7"/>
+
+      <!-- Garden bushes -->
+      <ellipse cx="192" cy="500" rx="32" ry="20" fill="#2a4a1a"/>
+      <ellipse cx="182" cy="492" rx="22" ry="16" fill="#3a5a28"/>
+      <ellipse cx="576" cy="500" rx="28" ry="18" fill="#2a4a1a"/>
+      <ellipse cx="584" cy="493" rx="20" ry="14" fill="#3a5a28"/>
+
+      <!-- Flower box under left-bottom window -->
+      <rect x="188" y="414" width="136" height="11" rx="3" fill="#7a5a10"/>
+      <g>
+        <circle cx="200" cy="411" r="4.5" fill="#d04040"/><circle cx="216" cy="413" r="3.5" fill="#e05050"/>
+        <circle cx="232" cy="410" r="4.5" fill="#c03030"/><circle cx="248" cy="412" r="3.5" fill="#d04040"/>
+        <circle cx="264" cy="410" r="4" fill="#e05050"/><circle cx="280" cy="412" r="3.5" fill="#c03030"/>
+        <circle cx="296" cy="411" r="4" fill="#d04040"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="scroll-hint">
+    <span>Skrolujte</span>
+    <div class="scroll-wheel"></div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-visual reveal-left">
+      <!-- Illustrated house interior/exterior accent -->
+      <div class="about-img-wrap">
+        <svg viewBox="0 0 520 390" xmlns="http://www.w3.org/2000/svg">
+          <!-- Interior warm scene -->
+          <defs>
+            <linearGradient id="intGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#1a2f20"/>
+              <stop offset="100%" style="stop-color:#c8a96e;stop-opacity:0.4"/>
+            </linearGradient>
+            <linearGradient id="floorGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#b8895a"/>
+              <stop offset="100%" style="stop-color:#8b6914"/>
+            </linearGradient>
+          </defs>
+          <!-- Room bg -->
+          <rect width="520" height="390" fill="url(#intGrad)"/>
+          <!-- Back wall -->
+          <rect x="0" y="0" width="520" height="280" fill="#f5ede0" opacity="0.12"/>
+          <!-- Floor -->
+          <polygon points="0,300 520,260 520,390 0,390" fill="url(#floorGrad)" opacity="0.4"/>
+          <!-- Large window -->
+          <rect x="140" y="40" width="240" height="180" rx="4" fill="#1e2d22" opacity="0.6"/>
+          <rect x="148" y="48" width="224" height="164" rx="2" fill="#ffe8a0" opacity="0.25"/>
+          <line x1="260" y1="48" x2="260" y2="212" stroke="#c8a96e" stroke-width="2" opacity="0.6"/>
+          <line x1="148" y1="130" x2="372" y2="130" stroke="#c8a96e" stroke-width="2" opacity="0.6"/>
+          <!-- Trees outside window -->
+          <ellipse cx="200" cy="100" rx="30" ry="40" fill="#1a3020" opacity="0.4"/>
+          <ellipse cx="320" cy="80" rx="35" ry="50" fill="#1a3020" opacity="0.3"/>
+          <!-- Furniture silhouettes -->
+          <rect x="60" y="270" width="180" height="60" rx="8" fill="#6a3a10" opacity="0.4"/>
+          <rect x="290" y="278" width="130" height="48" rx="8" fill="#4a2a08" opacity="0.35"/>
+          <!-- Fagus logo / branding text in scene -->
+          <text x="260" y="340" text-anchor="middle" font-family="Georgia,serif" font-size="18" fill="#c8a96e" opacity="0.6" letter-spacing="4">FAGUS PROJEKT</text>
+          <!-- Light beams -->
+          <polygon points="148,48 372,48 420,0 100,0" fill="#ffe8a0" opacity="0.04"/>
+        </svg>
+      </div>
+      <div class="about-stat-bar stagger">
+        <div class="stat-item">
+          <div class="stat-num" data-target="15">0</div>
+          <div class="stat-label">Godina iskustva</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" data-target="200">0</div>
+          <div class="stat-label">Realizovanih kuća</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" data-target="98">0</div>
+          <div class="stat-label">% zadovoljnih klijenata</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-text reveal-right">
+      <span class="section-label">Ko smo mi</span>
+      <h2 class="section-title">Stručnost i strast<br>za <em>svaki projekat</em></h2>
+      <p class="section-text">
+        Fagus Projekt je kompanija iz Ivanjice specijalizovana za projektovanje i izgradnju montažnih i drvenih objekata. Sa više od 15 godina iskustva, naš tim arhitekata i inženjera pruža kompletnu uslugu — od idejnog rešenja do finalnog useljenja.
+      </p>
+      <p class="section-text" style="margin-top:16px;">
+        Koristimo isključivo atestovane materijale i moderne tehnologije montažne gradnje, što rezultira energetski efikasnim, dugotrajnim i estetski savršenim domovima.
+      </p>
+      <div class="about-features" style="margin-top:32px;">
+        <div class="feature-row">
+          <div class="feature-icon">⚡</div>
+          <span>Brža gradnja od klasične — 60–90 dana</span>
+        </div>
+        <div class="feature-row">
+          <div class="feature-icon">🌿</div>
+          <span>Energetska efikasnost klase A i A+</span>
+        </div>
+        <div class="feature-row">
+          <div class="feature-icon">🏗️</div>
+          <span>Potpuna usluga — projekat, materijal, gradnja</span>
+        </div>
+        <div class="feature-row">
+          <div class="feature-icon">📐</div>
+          <span>Svaka kuća projektovana po meri klijenta</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROCESS ===== -->
+<section id="process">
+  <div class="process-header reveal">
+    <span class="section-label">Kako radimo</span>
+    <h2 class="section-title">Od ideje do <em>ključa u ruke</em></h2>
+    <p class="section-text" style="margin:0 auto; text-align:center;">
+      Naš proveren proces osigurava da vaš dom bude izgrađen tačno onako kako ste zamislili — bez iznenađenja, u dogovorenim rokovima.
+    </p>
+  </div>
+
+  <div class="process-steps stagger">
+    <div class="process-step reveal">
+      <div class="step-num">01</div>
+      <div class="step-title">Konsultacije</div>
+      <div class="step-desc">Upoznajemo se sa vašim potrebama, željama i budžetom. Besplatno i bez obaveza.</div>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-num">02</div>
+      <div class="step-title">Projektovanje</div>
+      <div class="step-desc">Naši arhitekti izrađuju kompletnu projektnu dokumentaciju po vašoj meri.</div>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-num">03</div>
+      <div class="step-title">Izrada elemenata</div>
+      <div class="step-desc">Prefabrikovani elementi se precizno izrađuju u kontrolisanim uslovima radionice.</div>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-num">04</div>
+      <div class="step-title">Montaža</div>
+      <div class="step-desc">Brza i čista montaža na vašoj parceli uz minimalne smetnje za okolinu.</div>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-num">05</div>
+      <div class="step-title">Ključ u ruke</div>
+      <div class="step-desc">Primopredaja gotovog objekta sa svom dokumentacijom i garancijom.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICES ===== -->
+<section id="services">
+  <div class="services-header reveal">
+    <div>
+      <span class="section-label">Naše usluge</span>
+      <h2 class="section-title">Sve što vam je<br>potrebno na jednom mestu</h2>
+    </div>
+    <p class="section-text">Od prvog crteža do useljenja — pratimo vas kroz svaki korak.</p>
+  </div>
+  <div class="services-grid stagger">
+    <div class="service-card reveal">
+      <div class="service-icon">🏡</div>
+      <div class="service-title">Montažne kuće</div>
+      <div class="service-desc">Kompletna izgradnja prefabrikovanih porodičnih kuća od drveta i savremenih materijala. Energetski efikasno, brzo i kvalitetno.</div>
+      <a href="#contact" class="service-link">Saznajte više →</a>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">📐</div>
+      <div class="service-title">Projektovanje</div>
+      <div class="service-desc">Izrada idejnih i glavnih projekata, 3D vizualizacija, dozvole za gradnju. Svako rešenje je jedinstveno i prilagođeno vašim potrebama.</div>
+      <a href="#contact" class="service-link">Saznajte više →</a>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🔨</div>
+      <div class="service-title">Izgradnja po meri</div>
+      <div class="service-desc">Realizacija nestandardnih projekata — od vila do vikendica, sve prema individualnoj specifikaciji klijenta i terenu parcele.</div>
+      <a href="#contact" class="service-link">Saznajte više →</a>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🏗️</div>
+      <div class="service-title">Adaptacije i dogradnje</div>
+      <div class="service-desc">Proširenje postojećih objekata, dodatni stambeni ili poslovni prostori, rekonstrukcija fasada i krovova.</div>
+      <a href="#contact" class="service-link">Saznajte više →</a>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">💬</div>
+      <div class="service-title">Savetovanje</div>
+      <div class="service-desc">Stručno savetovanje o izboru lokacije, vrsti konstrukcije, materijalima i optimalnom rešenju za vaš budžet i životni stil.</div>
+      <a href="#contact" class="service-link">Saznajte više →</a>
+    </div>
+    <div class="service-card reveal" style="background:rgba(200,169,110,0.15); border-color:rgba(200,169,110,0.3);">
+      <div class="service-icon">✨</div>
+      <div class="service-title">Besplatne konsultacije</div>
+      <div class="service-desc">Kontaktirajte nas i dogovorite besplatne inicijalne konsultacije. Bez obaveza, isključivo da bismo razumeli vaše potrebe.</div>
+      <a href="#contact" class="service-link" style="color:var(--wood-light);">Zakažite odmah →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GALLERY ===== -->
+<section id="gallery">
+  <div class="gallery-header reveal">
+    <span class="section-label">Portfolio</span>
+    <h2 class="section-title">Naši <em>realizovani projekti</em></h2>
+    <p class="section-text" style="margin:0 auto;">Svaka kuća je priča za sebe. Pogledajte neke od naših omiljenih realizacija.</p>
+  </div>
+  <div class="gallery-grid stagger">
+    <!-- Gallery item 1 — large -->
+    <div class="gallery-item reveal">
+      <svg class="gallery-svg" viewBox="0 0 600 380" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g1sky" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#8cb4d4"/>
+            <stop offset="100%" style="stop-color:#c8dce8"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="380" fill="url(#g1sky)"/>
+        <!-- Mountains bg -->
+        <polygon points="0,220 80,140 160,200 240,120 320,180 400,100 500,160 600,110 600,380 0,380" fill="#5a8a5a" opacity="0.6"/>
+        <polygon points="0,250 100,170 200,220 300,150 400,200 500,140 600,180 600,380 0,380" fill="#3a6a3a" opacity="0.7"/>
+        <!-- Ground -->
+        <rect x="0" y="320" width="600" height="60" fill="#3a5a28"/>
+        <!-- House - modern flat style -->
+        <rect x="100" y="160" width="400" height="165" fill="#f0ece4"/>
+        <polygon points="80,162 300,80 520,162" fill="#2a3a2e"/>
+        <!-- Windows -->
+        <rect x="130" y="185" width="100" height="70" rx="3" fill="#ffe8a0" opacity="0.9"/>
+        <rect x="260" y="185" width="80" height="70" rx="3" fill="#ffe8a0" opacity="0.85"/>
+        <rect x="380" y="185" width="90" height="70" rx="3" fill="#ffe8a0" opacity="0.9"/>
+        <!-- Door -->
+        <rect x="235" y="258" width="52" height="67" rx="2" fill="#8b6914"/>
+        <rect x="238" y="261" width="46" height="61" rx="1" fill="#c8a96e"/>
+        <!-- Wood accent -->
+        <rect x="100" y="315" width="400" height="12" rx="2" fill="#c8a96e"/>
+        <!-- Trees -->
+        <rect x="60" y="250" width="8" height="80" fill="#3a2a10"/>
+        <ellipse cx="64" cy="242" rx="24" ry="32" fill="#1a4020"/>
+        <rect x="510" y="260" width="8" height="72" fill="#3a2a10"/>
+        <ellipse cx="514" cy="252" rx="22" ry="28" fill="#1a4020"/>
+      </svg>
+      <div class="gallery-overlay">
+        <div class="gallery-tag">Porodična kuća</div>
+        <div class="gallery-title">Vila u Zlatiboru — 180m²</div>
+      </div>
+    </div>
+
+    <!-- Gallery item 2 -->
+    <div class="gallery-item reveal">
+      <svg class="gallery-svg" viewBox="0 0 360 280" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g2sky" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#e8d4b0"/>
+            <stop offset="100%" style="stop-color:#f5ead0"/>
+          </linearGradient>
+        </defs>
+        <rect width="360" height="280" fill="url(#g2sky)"/>
+        <rect x="0" y="240" width="360" height="40" fill="#4a6a30"/>
+        <!-- Modern L-shape house -->
+        <rect x="50" y="120" width="260" height="130" fill="#e8e0d4"/>
+        <rect x="50" y="80" width="140" height="50" fill="#d4ccbe"/>
+        <!-- Flat roof line -->
+        <rect x="45" y="78" width="150" height="8" rx="2" fill="#2a3a2e"/>
+        <rect x="45" y="118" width="270" height="8" rx="2" fill="#2a3a2e"/>
+        <!-- Windows -->
+        <rect x="65" y="135" width="70" height="50" rx="2" fill="#ffe8a0" opacity="0.9"/>
+        <rect x="160" y="135" width="50" height="50" rx="2" fill="#ffe8a0" opacity="0.85"/>
+        <rect x="235" y="135" width="55" height="50" rx="2" fill="#ffe8a0" opacity="0.9"/>
+        <!-- Door -->
+        <rect x="175" y="200" width="38" height="50" rx="1" fill="#8b6914"/>
+        <!-- Deck -->
+        <rect x="48" y="246" width="264" height="8" rx="2" fill="#c8a96e"/>
+        <!-- Trees -->
+        <ellipse cx="28" cy="200" rx="18" ry="26" fill="#1a4020"/>
+        <rect x="24" y="220" width="8" height="28" fill="#3a2a10"/>
+        <ellipse cx="338" cy="205" rx="16" ry="22" fill="#1a4020"/>
+        <rect x="334" y="222" width="8" height="26" fill="#3a2a10"/>
+      </svg>
+      <div class="gallery-overlay">
+        <div class="gallery-tag">Moderan stil</div>
+        <div class="gallery-title">Kuća u Čačku — 140m²</div>
+      </div>
+    </div>
+
+    <!-- Gallery item 3 -->
+    <div class="gallery-item reveal">
+      <svg class="gallery-svg" viewBox="0 0 360 280" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g3sky" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#7a9a8a"/>
+            <stop offset="100%" style="stop-color:#a4c4b0"/>
+          </linearGradient>
+        </defs>
+        <rect width="360" height="280" fill="url(#g3sky)"/>
+        <rect x="0" y="240" width="360" height="40" fill="#2a4020"/>
+        <!-- Vikendica / cabin style -->
+        <rect x="70" y="150" width="220" height="100" fill="#c8a968"/>
+        <!-- Roof steep -->
+        <polygon points="50,152 180,70 310,152" fill="#1a2520"/>
+        <!-- Horizontal log lines -->
+        <g stroke="#a08040" stroke-width="1.5" opacity="0.6">
+          <line x1="70" y1="170" x2="290" y2="170"/>
+          <line x1="70" y1="190" x2="290" y2="190"/>
+          <line x1="70" y1="210" x2="290" y2="210"/>
+          <line x1="70" y1="230" x2="290" y2="230"/>
+        </g>
+        <!-- Windows -->
+        <rect x="90" y="160" width="70" height="55" rx="3" fill="#ffe8a0" opacity="0.85"/>
+        <rect x="200" y="160" width="70" height="55" rx="3" fill="#ffe8a0" opacity="0.85"/>
+        <!-- Door -->
+        <rect x="155" y="207" width="50" height="43" rx="2" fill="#5a3a08"/>
+        <circle cx="200" cy="229" r="4" fill="#c8a96e"/>
+        <!-- Chimney -->
+        <rect x="210" y="80" width="24" height="55" rx="2" fill="#b09070"/>
+        <!-- Porch posts -->
+        <rect x="70" y="148" width="6" height="104" fill="#8b6914"/>
+        <rect x="284" y="148" width="6" height="104" fill="#8b6914"/>
+        <rect x="68" y="145" width="224" height="8" rx="2" fill="#c8a96e"/>
+      </svg>
+      <div class="gallery-overlay">
+        <div class="gallery-tag">Vikendica</div>
+        <div class="gallery-title">Brvnara na Goliji — 80m²</div>
+      </div>
+    </div>
+
+    <!-- Gallery item 4 — wide -->
+    <div class="gallery-item reveal">
+      <svg class="gallery-svg" viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g4sky" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#1a2f20"/>
+            <stop offset="100%" style="stop-color:#3a6040"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="280" fill="url(#g4sky)"/>
+        <!-- Night scene - illuminated house -->
+        <rect x="0" y="240" width="600" height="40" fill="#1a2a10"/>
+        <!-- House lit at night -->
+        <rect x="80" y="120" width="440" height="130" fill="#2a3020"/>
+        <polygon points="60,122 300,50 540,122" fill="#1a2018"/>
+        <!-- Glowing windows -->
+        <rect x="100" y="140" width="90" height="65" rx="3" fill="#ffe8a0"/>
+        <rect x="100" y="140" width="90" height="65" rx="3" fill="#ffe090" opacity="0.6"/>
+        <rect x="220" y="140" width="80" height="65" rx="3" fill="#ffe8a0"/>
+        <rect x="220" y="140" width="80" height="65" rx="3" fill="#ffd060" opacity="0.5"/>
+        <rect x="340" y="140" width="75" height="65" rx="3" fill="#ffe8a0"/>
+        <rect x="440" y="140" width="60" height="65" rx="3" fill="#ffe8a0" opacity="0.8"/>
+        <!-- Window glow halo -->
+        <ellipse cx="145" cy="172" rx="55" ry="40" fill="#ffe090" opacity="0.08"/>
+        <ellipse cx="260" cy="172" rx="50" ry="38" fill="#ffe090" opacity="0.08"/>
+        <ellipse cx="378" cy="172" rx="45" ry="36" fill="#ffe090" opacity="0.08"/>
+        <!-- Door lit -->
+        <rect x="265" y="208" width="50" height="42" rx="2" fill="#8b6914"/>
+        <!-- Path lights -->
+        <g fill="#ffe090" opacity="0.8">
+          <circle cx="290" cy="258" r="4"/>
+          <circle cx="290" cy="268" r="3"/>
+          <circle cx="265" cy="262" r="3"/>
+          <circle cx="315" cy="262" r="3"/>
+        </g>
+        <!-- Stars -->
+        <g fill="white" opacity="0.6">
+          <circle cx="80" cy="30" r="1.5"/>
+          <circle cx="150" cy="18" r="1"/>
+          <circle cx="420" cy="22" r="1.5"/>
+          <circle cx="500" cy="12" r="1"/>
+          <circle cx="340" cy="35" r="1"/>
+          <circle cx="50" cy="15" r="1.5"/>
+          <circle cx="560" cy="28" r="1"/>
+        </g>
+        <!-- Deck lighting -->
+        <rect x="78" y="246" width="444" height="6" rx="2" fill="#c8a96e" opacity="0.7"/>
+      </svg>
+      <div class="gallery-overlay">
+        <div class="gallery-tag">Noćna fotografija</div>
+        <div class="gallery-title">Porodična kuća u Ivanjici — 220m²</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHY US ===== -->
+<section id="why">
+  <div class="why-header reveal">
+    <span class="section-label">Zašto Fagus Projekt</span>
+    <h2 class="section-title">Šest razloga zašto nas biraju<br><em>porodice širom Srbije</em></h2>
+    <p class="section-text">Kvalitet koji govorite prijatelju, brzina koja vas iznenadi, cena koja ima smisla.</p>
+  </div>
+  <div class="why-grid stagger">
+    <div class="why-card reveal">
+      <span class="why-icon">⚡</span>
+      <div class="why-title">Brža gradnja</div>
+      <p class="why-text">Montažna gradnja je 3–4x brža od klasične. Vaša kuća je gotova za 60–90 dana od postavljanja temelja, bez čekanja na sušenje betona.</p>
+    </div>
+    <div class="why-card reveal">
+      <span class="why-icon">🌿</span>
+      <div class="why-title">Energetska efikasnost</div>
+      <p class="why-text">Naši objekti ispunjavaju standarde energetske klase A i A+. Niži računi za grejanje i hlađenje tokom cele godine.</p>
+    </div>
+    <div class="why-card reveal">
+      <span class="why-icon">🪵</span>
+      <div class="why-title">Kvalitetni materijali</div>
+      <p class="why-text">Koristimo isključivo atestovano drvo, mineralne vune, hidroizolacije i fasadne sisteme od pouzdanih evropskih proizvođača.</p>
+    </div>
+    <div class="why-card reveal">
+      <span class="why-icon">🤝</span>
+      <div class="why-title">Pouzdan tim</div>
+      <p class="why-text">Naši majstori i inženjeri rade zajedno godinama. Znaju jedni druge, znaju procese — i to se vidi na svakom projektu.</p>
+    </div>
+    <div class="why-card reveal">
+      <span class="why-icon">📏</span>
+      <div class="why-title">Rešenja po meri</div>
+      <p class="why-text">Nijedan projekat nije kopija drugog. Svaka kuća je projektovana prema vašim potrebama, parceli i stilu života.</p>
+    </div>
+    <div class="why-card reveal">
+      <span class="why-icon">💰</span>
+      <div class="why-title">Odnos cene i kvaliteta</div>
+      <p class="why-text">Transparentne cene bez skrivenih troškova. Znate šta dobijate pre nego što potpišete. Investicija koja se isplati dugoročno.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section id="cta">
+  <span class="section-label cta-label reveal">Vaš sledeći korak</span>
+  <h2 class="cta-title reveal">Spremni da započnete<br><em style="font-style:italic;color:var(--wood-light);">svoj dom?</em></h2>
+  <p class="cta-sub reveal">Kontaktirajte nas danas — besplatne konsultacije su vaš prvi korak ka savršenom domu.</p>
+  <div class="reveal">
+    <a href="#contact" class="btn btn-primary btn-large">Zatražite ponudu →</a>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="contact-info reveal-left">
+      <span class="section-label">Kontakt</span>
+      <h2 class="section-title">Razgovarajmo<br>o <em>vašem domu</em></h2>
+      <p class="section-text">Naš tim je tu da odgovori na sva vaša pitanja. Stupite u kontakt — voleli bismo da čujemo vašu ideju.</p>
+      <div class="contact-details" style="margin-top: 40px;">
+        <div class="contact-item">
+          <div class="contact-ico">📞</div>
+          <div>
+            <div class="contact-item-label">Telefon</div>
+            <div class="contact-item-val">+381 32 XXX XXX</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-ico">✉️</div>
+          <div>
+            <div class="contact-item-label">Email</div>
+            <div class="contact-item-val">info@fagusprojekt.rs</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-ico">📍</div>
+          <div>
+            <div class="contact-item-label">Adresa</div>
+            <div class="contact-item-val">Ivanjica, Srbija</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-ico">🕐</div>
+          <div>
+            <div class="contact-item-label">Radno vreme</div>
+            <div class="contact-item-val">Pon–Pet: 08:00–16:00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form reveal-right">
+      <div class="form-title">Pošaljite upit</div>
+      <div class="form-sub">Odgovaramo u roku od 24 sata. Sva pitanja su dobrodošla.</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Ime i prezime *</label>
+          <input type="text" placeholder="Marko Marković">
+        </div>
+        <div class="form-group">
+          <label>Telefon *</label>
+          <input type="tel" placeholder="+381 60...">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email adresa</label>
+        <input type="email" placeholder="vas@email.com">
+      </div>
+      <div class="form-group">
+        <label>Tip projekta</label>
+        <select>
+          <option>Montažna kuća</option>
+          <option>Vikendica / brvnara</option>
+          <option>Projektovanje</option>
+          <option>Adaptacija / dogradnja</option>
+          <option>Savetovanje</option>
+          <option>Nešto drugo</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Poruka</label>
+        <textarea placeholder="Opišite ukratko vaš projekat, lokaciju, kvadraturu i vaše želje..."></textarea>
+      </div>
+      <button class="form-submit" onclick="handleFormSubmit(this)">Pošalji poruku →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">Fagus Projekt</div>
+      <p class="footer-tagline">Projektovanje i izgradnja montažnih kuća po meri. Vaš dom, vaša priča — naša strast.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Usluge</h4>
+      <ul>
+        <li><a href="#services">Montažne kuće</a></li>
+        <li><a href="#services">Projektovanje</a></li>
+        <li><a href="#services">Izgradnja po meri</a></li>
+        <li><a href="#services">Adaptacije</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Kompanija</h4>
+      <ul>
+        <li><a href="#about">O nama</a></li>
+        <li><a href="#process">Proces rada</a></li>
+        <li><a href="#gallery">Portfolio</a></li>
+        <li><a href="#contact">Kontakt</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Lokacija</h4>
+      <ul>
+        <li><a href="#">Ivanjica, Srbija</a></li>
+        <li><a href="#">Centralna Srbija</a></li>
+        <li><a href="#">Zlatibor region</a></li>
+        <li><a href="#">Čitava Srbija</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 Fagus Projekt. Sva prava zadržana.</span>
+    <span>Izrađeno sa ❤️ za dom iz snova</span>
+  </div>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+
+<script src="script.js"></script>
+</body>
+</html>
