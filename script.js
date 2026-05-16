@@ -1,13 +1,30 @@
 /* ---- PAGE LOADER ---- */
-window.addEventListener('load', function() {
+/* Robust loader removal:
+   - Tries to hide after 'load' fires (normal path)
+   - Hard fallback at 2000ms removes it no matter what
+   - Guard flag ensures it only runs once                */
+var loaderDone = false;
+
+function hideLoader() {
+  if (loaderDone) return;
+  loaderDone = true;
+  var loader = document.getElementById('page-loader');
+  if (loader) loader.classList.add('hidden');
   setTimeout(function() {
-    document.getElementById('page-loader').classList.add('hidden');
-    setTimeout(function() {
-      document.getElementById('heroContent').classList.add('visible');
-      document.getElementById('heroHouse').classList.add('visible');
-    }, 200);
-  }, 700);
+    var hc = document.getElementById('heroContent');
+    var hh = document.getElementById('heroHouse');
+    if (hc) hc.classList.add('visible');
+    if (hh) hh.classList.add('visible');
+  }, 200);
+}
+
+/* Path 1 — window.load (all resources ready) */
+window.addEventListener('load', function() {
+  setTimeout(hideLoader, 600);
 });
+
+/* Path 2 — hard deadline: 2s maximum, works even if load never fires */
+setTimeout(hideLoader, 2000);
 
 /* ---- NAV SCROLL BEHAVIOR ---- */
 const navbar = document.getElementById('navbar');

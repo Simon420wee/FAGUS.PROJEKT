@@ -49,9 +49,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.8s ease, visibility 0.8s ease;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
 }
-#page-loader.hidden { opacity: 0; visibility: hidden; }
+#page-loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
 .loader-logo {
   font-family: 'Playfair Display', serif;
   font-size: 2rem;
