@@ -14,7 +14,7 @@
 </head>
 <body>
 <!-- ===== PAGE LOADER ===== -->
-<div id="page-loader">
+<div id="preloader">
   <div class="loader-logo">FAGUS</div>
 </div>
 
@@ -851,9 +851,36 @@
   </div>
 </footer>
 
-<!-- ============================================================
-     JAVASCRIPT
-
 <script src="script.js"></script>
+
+<!-- Inline fallback: runs even if script.js has any issue -->
+<script>
+  function forceHidePreloader() {
+    var preloader = document.getElementById('preloader')
+      || document.getElementById('page-loader')
+      || document.querySelector('.preloader')
+      || document.querySelector('.loader');
+    if (preloader) {
+      preloader.style.opacity = '0';
+      preloader.style.visibility = 'hidden';
+      preloader.style.pointerEvents = 'none';
+      setTimeout(function() { preloader.style.display = 'none'; }, 500);
+    }
+    document.body.classList.add('loaded');
+    document.documentElement.classList.add('loaded');
+    /* Ensure hero elements are visible */
+    var hc = document.getElementById('heroContent');
+    var hh = document.getElementById('heroHouse');
+    if (hc) hc.classList.add('visible');
+    if (hh) hh.classList.add('visible');
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(forceHidePreloader, 1200);
+  });
+  window.addEventListener('load', function() {
+    setTimeout(forceHidePreloader, 500);
+  });
+  setTimeout(forceHidePreloader, 2000);
+</script>
 </body>
 </html>

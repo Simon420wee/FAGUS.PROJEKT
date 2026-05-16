@@ -41,6 +41,9 @@ body {
 }
 
 /* Loading overlay */
+/* Preloader — covers the screen until JS removes it.
+   Both ids are supported so inline fallback and script.js both work. */
+#preloader,
 #page-loader {
   position: fixed;
   inset: 0;
@@ -51,10 +54,24 @@ body {
   justify-content: center;
   transition: opacity 0.6s ease, visibility 0.6s ease;
 }
+#preloader.hidden,
 #page-loader.hidden {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+}
+
+/* Ensure hero elements are never permanently hidden.
+   body.loaded / html.loaded are added by the inline fallback script. */
+body.loaded #heroContent,
+html.loaded #heroContent {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+body.loaded #heroHouse,
+html.loaded #heroHouse {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
 }
 .loader-logo {
   font-family: 'Playfair Display', serif;

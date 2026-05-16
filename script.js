@@ -1,15 +1,17 @@
 /* ---- PAGE LOADER ---- */
-/* Robust loader removal:
-   - Tries to hide after 'load' fires (normal path)
-   - Hard fallback at 2000ms removes it no matter what
-   - Guard flag ensures it only runs once                */
+/* hideLoader is called by window.load and by a 2s hard deadline.
+   loaderDone flag ensures it only executes once.              */
 var loaderDone = false;
 
 function hideLoader() {
   if (loaderDone) return;
   loaderDone = true;
-  var loader = document.getElementById('page-loader');
+  /* Support both id names — preloader (current) and page-loader (legacy) */
+  var loader = document.getElementById('preloader')
+    || document.getElementById('page-loader');
   if (loader) loader.classList.add('hidden');
+  document.body.classList.add('loaded');
+  document.documentElement.classList.add('loaded');
   setTimeout(function() {
     var hc = document.getElementById('heroContent');
     var hh = document.getElementById('heroHouse');
@@ -18,12 +20,12 @@ function hideLoader() {
   }, 200);
 }
 
-/* Path 1 — window.load (all resources ready) */
+/* Path 1 — fires when all resources are ready */
 window.addEventListener('load', function() {
   setTimeout(hideLoader, 600);
 });
 
-/* Path 2 — hard deadline: 2s maximum, works even if load never fires */
+/* Path 2 — hard deadline: 2s max, runs regardless */
 setTimeout(hideLoader, 2000);
 
 /* ---- NAV SCROLL BEHAVIOR ---- */
