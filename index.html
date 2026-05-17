@@ -66,257 +66,43 @@
     </div>
   </div>
 
-  <!-- SVG HOUSE ILLUSTRATION -->
-  <div class="hero-house" id="heroHouse">
-    <svg viewBox="0 0 780 560" xmlns="http://www.w3.org/2000/svg" id="houseSvg">
-      <defs>
-        <linearGradient id="woodGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" style="stop-color:#d4a96e"/>
-          <stop offset="50%" style="stop-color:#b8895a"/>
-          <stop offset="100%" style="stop-color:#8b6914"/>
-        </linearGradient>
-        <linearGradient id="wallGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:#f5ede0"/>
-          <stop offset="100%" style="stop-color:#e8daca"/>
-        </linearGradient>
-        <linearGradient id="roofGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" style="stop-color:#2a3a2e"/>
-          <stop offset="100%" style="stop-color:#1a2520"/>
-        </linearGradient>
-        <linearGradient id="groundGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" style="stop-color:#3a5a30"/>
-          <stop offset="100%" style="stop-color:#2a3a20"/>
-        </linearGradient>
-        <radialGradient id="winGlow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" style="stop-color:#ffe8a0;stop-opacity:0.9"/>
-          <stop offset="100%" style="stop-color:#f0c060;stop-opacity:0.4"/>
-        </radialGradient>
-        <!-- Door interior warm light — revealed when door opens -->
-        <radialGradient id="doorInteriorGrad" cx="50%" cy="40%" r="70%">
-          <stop offset="0%" style="stop-color:#fff5d0"/>
-          <stop offset="40%" style="stop-color:#ffe090"/>
-          <stop offset="100%" style="stop-color:#c87820;stop-opacity:0.5"/>
-        </radialGradient>
-        <!-- Bloom gradient for light radiating from doorway -->
-        <radialGradient id="bloomGrad" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" style="stop-color:#ffe8a0;stop-opacity:0.9"/>
-          <stop offset="50%" style="stop-color:#ffcc60;stop-opacity:0.4"/>
-          <stop offset="100%" style="stop-color:#f0a020;stop-opacity:0"/>
-        </radialGradient>
-        <filter id="bloomFilter" x="-60%" y="-60%" width="220%" height="220%">
-          <feGaussianBlur stdDeviation="18"/>
-        </filter>
-      </defs>
+  <!-- HERO VISUAL — real house photo with 3D depth treatment -->
+  <div class="hero-visual" id="heroHouse">
 
-      <!-- Ground / grass -->
-      <ellipse cx="390" cy="530" rx="340" ry="42" fill="url(#groundGrad)" opacity="0.85"/>
+    <!-- Layered depth wrapper — mouse-tilt targets this -->
+    <div class="hero-visual-scene" id="heroScene">
 
-      <!-- Background trees — positioned so none protrude awkwardly beside house -->
-      <g opacity="0.45">
-        <!-- Far left tree — trunk starts at x=68, well left of house at x=158 -->
-        <rect x="68" y="360" width="12" height="112" fill="#3d2a10" rx="2"/>
-        <ellipse cx="74" cy="348" rx="30" ry="44" fill="#1a3020"/>
-        <ellipse cx="74" cy="324" rx="21" ry="34" fill="#223a2a"/>
-        <!-- Far right tree -->
-        <rect x="690" y="368" width="12" height="104" fill="#3d2a10" rx="3"/>
-        <ellipse cx="696" cy="357" rx="28" ry="42" fill="#1a3020"/>
-        <ellipse cx="696" cy="336" rx="20" ry="32" fill="#223a2a"/>
-        <!-- Smaller mid-right tree -->
-        <rect x="630" y="408" width="8" height="74" fill="#3d2a10" rx="2"/>
-        <ellipse cx="634" cy="403" rx="18" ry="26" fill="#1a3020"/>
-        <!-- Smaller mid-left tree — keep trunk x well left of house -->
-        <rect x="118" y="418" width="8" height="64" fill="#3d2a10" rx="2"/>
-        <ellipse cx="122" cy="413" rx="16" ry="22" fill="#1a3020"/>
-      </g>
+      <!-- Background glow layer — creates depth behind the image -->
+      <div class="hero-visual-glow"></div>
 
-      <!-- Ground shadow — drawn manually so no filter bounding-box artifact -->
-      <ellipse cx="395" cy="485" rx="220" ry="22" fill="#050e07" opacity="0.35"/>
+      <!-- The house image itself -->
+      <div class="hero-visual-frame">
+        <img
+          src="assets/projekat1.webp"
+          alt="Montažna porodična kuća sa uređenim dvorištem"
+          class="hero-visual-img"
+          loading="eager"
+          decoding="async"
+        />
+        <!-- Left fade — blends image into dark green hero background -->
+        <div class="hero-visual-fade-left"></div>
+        <!-- Bottom fade — grounds the image naturally -->
+        <div class="hero-visual-fade-bottom"></div>
+        <!-- Warm light flash overlay — activated by button click -->
+        <div class="hero-visual-light" id="heroVisualLight"></div>
+      </div>
 
-      <!-- ===== MAIN HOUSE BODY ===== -->
-      <g>
+      <!-- Floating info badge — adds architectural depth -->
+      <div class="hero-visual-badge">
+        <span class="hvb-dot"></span>
+        <span>Realizovano 2023.</span>
+      </div>
 
-        <!-- Foundation slab -->
-        <rect x="158" y="472" width="430" height="18" rx="4" fill="#8b7a5a"/>
+      <!-- Corner accent lines — premium architectural detail -->
+      <div class="hero-visual-corner-tl"></div>
+      <div class="hero-visual-corner-br"></div>
 
-        <!-- RIGHT SIDE WALL — kept tight, no overrun -->
-        <polygon points="588,148 632,168 632,472 588,472" fill="#ddd0bc"/>
-        <!-- Side wall shading -->
-        <polygon points="588,148 632,168 632,300 588,280" fill="#c8baa8" opacity="0.5"/>
-
-        <!-- MAIN FACADE WALL -->
-        <rect x="158" y="148" width="430" height="324" rx="3" fill="url(#wallGrad)"/>
-
-        <!-- Wood cladding planks -->
-        <g fill="none" stroke="#c8b098" stroke-width="1" opacity="0.45">
-          <line x1="158" y1="178" x2="588" y2="178"/>
-          <line x1="158" y1="208" x2="588" y2="208"/>
-          <line x1="158" y1="238" x2="588" y2="238"/>
-          <line x1="158" y1="268" x2="588" y2="268"/>
-          <line x1="158" y1="298" x2="588" y2="298"/>
-          <line x1="158" y1="328" x2="588" y2="328"/>
-          <line x1="158" y1="358" x2="588" y2="358"/>
-          <line x1="158" y1="388" x2="588" y2="388"/>
-          <line x1="158" y1="418" x2="588" y2="418"/>
-          <line x1="158" y1="448" x2="588" y2="448"/>
-        </g>
-
-        <!-- ===== ROOF ===== -->
-        <!-- Main roof shape: front face only, clean polygon -->
-        <polygon points="130,150 390,48 632,168 588,148 390,72 158,148" fill="url(#roofGrad)"/>
-        <!-- Left overhang dark underside -->
-        <polygon points="130,150 158,148 158,162 130,165" fill="#0e1810"/>
-        <!-- Right overhang dark underside -->
-        <polygon points="588,148 632,168 632,180 588,162" fill="#0e1810"/>
-
-        <!-- Roof trim/fascia lines -->
-        <line x1="130" y1="150" x2="588" y2="148" stroke="#c8a96e" stroke-width="3.5"/>
-        <line x1="588" y1="148" x2="632" y2="168" stroke="#c8a96e" stroke-width="3.5"/>
-
-        <!-- Roof ridge cap -->
-        <line x1="388" y1="48" x2="388" y2="70" stroke="#c8a96e" stroke-width="2" opacity="0.6"/>
-
-        <!-- Chimney — INSIDE the roof, positioned carefully -->
-        <rect x="470" y="88" width="30" height="62" rx="2" fill="#c8b098"/>
-        <rect x="466" y="84" width="38" height="10" rx="2" fill="#b0987a"/>
-        <!-- Smoke wisps — small and subtle -->
-        <g opacity="0.22" fill="#e0d8c8">
-          <ellipse cx="485" cy="76" rx="6" ry="9"/>
-          <ellipse cx="490" cy="64" rx="5" ry="7"/>
-          <ellipse cx="483" cy="54" rx="4" ry="6"/>
-        </g>
-
-        <!-- Dormer window in roof -->
-        <polygon points="345,72 390,48 435,72" fill="#1a2520"/>
-        <rect x="360" y="72" width="60" height="38" rx="2" fill="#1e2d22"/>
-        <rect x="366" y="77" width="48" height="26" rx="1" fill="url(#winGlow)"/>
-        <line x1="390" y1="77" x2="390" y2="103" stroke="#8b6914" stroke-width="1.5"/>
-
-        <!-- ===== WINDOWS ===== -->
-        <!-- Left top window -->
-        <rect x="182" y="188" width="148" height="108" rx="4" fill="#1e2d22"/>
-        <rect x="188" y="194" width="136" height="96" rx="2" fill="url(#winGlow)" opacity="0.85"/>
-        <line x1="256" y1="194" x2="256" y2="290" stroke="#8b6914" stroke-width="2"/>
-        <line x1="188" y1="242" x2="324" y2="242" stroke="#8b6914" stroke-width="2"/>
-        <rect x="182" y="188" width="148" height="108" rx="4" fill="none" stroke="#c8a96e" stroke-width="2.5"/>
-
-        <!-- Left bottom window -->
-        <rect x="182" y="322" width="148" height="96" rx="4" fill="#1e2d22"/>
-        <rect x="188" y="328" width="136" height="84" rx="2" fill="url(#winGlow)" opacity="0.75"/>
-        <line x1="256" y1="328" x2="256" y2="412" stroke="#8b6914" stroke-width="2"/>
-        <rect x="182" y="322" width="148" height="96" rx="4" fill="none" stroke="#c8a96e" stroke-width="2.5"/>
-
-        <!-- Right large window -->
-        <rect x="390" y="188" width="148" height="174" rx="4" fill="#1e2d22"/>
-        <rect x="397" y="195" width="134" height="160" rx="2" fill="url(#winGlow)" opacity="0.8"/>
-        <line x1="464" y1="195" x2="464" y2="355" stroke="#8b6914" stroke-width="2"/>
-        <line x1="397" y1="275" x2="531" y2="275" stroke="#8b6914" stroke-width="2"/>
-        <rect x="390" y="188" width="148" height="174" rx="4" fill="none" stroke="#c8a96e" stroke-width="2.5"/>
-
-        <!-- ===== DOOR UNIT ===== -->
-        <!--
-          The light bloom sits BEHIND the door frame, centered on the doorway opening.
-          It starts invisible and grows as the door opens.
-        -->
-        <ellipse id="door-light-bloom" cx="340" cy="401" rx="30" ry="38"
-                 fill="url(#bloomGrad)" filter="url(#bloomFilter)" opacity="0"/>
-
-        <g id="door-group">
-
-          <!-- Door frame outer (brown surround) -->
-          <rect x="300" y="326" width="80" height="150" rx="3" fill="#7a5a10"/>
-
-          <!-- Door opening — dark interior background, always visible behind panel -->
-          <rect x="304" y="330" width="72" height="143" rx="1" fill="#150f05" id="door-interior-bg"/>
-
-          <!-- Interior warm glow — fades in as door opens, sits above dark bg but below panel -->
-          <rect id="door-interior-glow" x="304" y="330" width="72" height="143"
-                rx="1" fill="url(#doorInteriorGrad)" opacity="0"/>
-
-          <!--
-            Door panel as a POLYGON so we can reshape its 4 corners each frame.
-            Hinge is on the LEFT edge. Initial corners (closed):
-              top-left:  (304, 330)
-              top-right: (376, 330)
-              bot-right: (376, 473)
-              bot-left:  (304, 473)
-            As door opens, the right edge moves LEFT (foreshortens toward hinge),
-            simulating the panel rotating away. No transform needed — just update points.
-          -->
-          <polygon id="dp-panel"
-            points="304,330 376,330 376,473 304,473"
-            fill="url(#woodGrad)"/>
-
-          <!-- Panel top inset — also a polygon, redrawn by JS -->
-          <polygon id="dp-top"
-            points="311,338 369,338 369,391 311,391"
-            fill="none" stroke="#9a6a14" stroke-width="1.5"/>
-
-          <!-- Panel bottom inset — polygon -->
-          <polygon id="dp-bot"
-            points="311,399 369,399 369,462 311,462"
-            fill="none" stroke="#9a6a14" stroke-width="1.5"/>
-
-          <!-- Handle group — JS moves its x position -->
-          <g id="dp-handle">
-            <rect id="dp-hbp" x="358" y="394" width="10" height="22" rx="3" fill="#8b6914"/>
-            <circle id="dp-hknob" cx="363" cy="397" r="5" fill="#c8a96e"/>
-          </g>
-
-          <!-- Door threshold -->
-          <rect x="294" y="472" width="92" height="9" rx="2" fill="#7a5a10"/>
-          <rect x="298" y="477" width="84" height="5" rx="1" fill="#5a3e0a"/>
-        </g>
-
-        <!-- ===== DECK / VERANDA ===== -->
-        <rect x="156" y="460" width="434" height="13" rx="3" fill="url(#woodGrad)"/>
-        <!-- Railing posts — left zone (stops before door) -->
-        <g fill="#8b6914">
-          <rect x="163" y="422" width="5" height="40" rx="1"/>
-          <rect x="191" y="422" width="5" height="40" rx="1"/>
-          <rect x="219" y="422" width="5" height="40" rx="1"/>
-          <rect x="247" y="422" width="5" height="40" rx="1"/>
-          <rect x="275" y="422" width="5" height="40" rx="1"/>
-          <!-- Gap for door 300–384 -->
-          <!-- Railing posts right zone -->
-          <rect x="388" y="422" width="5" height="40" rx="1"/>
-          <rect x="416" y="422" width="5" height="40" rx="1"/>
-          <rect x="444" y="422" width="5" height="40" rx="1"/>
-          <rect x="472" y="422" width="5" height="40" rx="1"/>
-          <rect x="500" y="422" width="5" height="40" rx="1"/>
-          <rect x="528" y="422" width="5" height="40" rx="1"/>
-          <rect x="556" y="422" width="5" height="40" rx="1"/>
-          <rect x="580" y="422" width="5" height="40" rx="1"/>
-        </g>
-        <!-- Top rail left -->
-        <rect x="158" y="420" width="127" height="5" rx="2" fill="url(#woodGrad)"/>
-        <!-- Top rail right -->
-        <rect x="384" y="420" width="204" height="5" rx="2" fill="url(#woodGrad)"/>
-
-        <!-- Outdoor wall lamp post -->
-        <rect x="288" y="390" width="4" height="78" fill="#6a5030" opacity="0.8"/>
-        <polygon points="282,390 290,382 298,390" fill="#b89040" opacity="0.9"/>
-        <ellipse cx="290" cy="393" rx="6" ry="3" fill="#ffe090" opacity="0.7"/>
-
-      </g><!-- end softShadow group -->
-
-      <!-- Walkway path to door -->
-      <polygon points="322,512 298,480 382,480 358,512" fill="#b8a888" opacity="0.7"/>
-
-      <!-- Garden bushes -->
-      <ellipse cx="192" cy="500" rx="32" ry="20" fill="#2a4a1a"/>
-      <ellipse cx="182" cy="492" rx="22" ry="16" fill="#3a5a28"/>
-      <ellipse cx="576" cy="500" rx="28" ry="18" fill="#2a4a1a"/>
-      <ellipse cx="584" cy="493" rx="20" ry="14" fill="#3a5a28"/>
-
-      <!-- Flower box under left-bottom window -->
-      <rect x="188" y="414" width="136" height="11" rx="3" fill="#7a5a10"/>
-      <g>
-        <circle cx="200" cy="411" r="4.5" fill="#d04040"/><circle cx="216" cy="413" r="3.5" fill="#e05050"/>
-        <circle cx="232" cy="410" r="4.5" fill="#c03030"/><circle cx="248" cy="412" r="3.5" fill="#d04040"/>
-        <circle cx="264" cy="410" r="4" fill="#e05050"/><circle cx="280" cy="412" r="3.5" fill="#c03030"/>
-        <circle cx="296" cy="411" r="4" fill="#d04040"/>
-      </g>
-    </svg>
+    </div>
   </div>
 
   <!-- Scroll indicator -->
