@@ -346,11 +346,12 @@ nav.scrolled .nav-hamburger span { background: var(--green); }
 .hero-visual {
   position: absolute;
   right: 0;
+  /* Anchor from top with nav offset — aligns with headline area */
   top: 50%;
-  transform: translateY(-50%) translateX(40px);
+  transform: translateY(-58%) translateX(40px);
   width: 52%;
-  height: 76vh;
-  max-height: 680px;
+  height: 78vh;
+  max-height: 700px;
   min-height: 420px;
   border-radius: 28px 0 0 28px;
   overflow: hidden;
@@ -361,7 +362,7 @@ nav.scrolled .nav-hamburger span { background: var(--green); }
 }
 .hero-visual.visible {
   opacity: 1;
-  transform: translateY(-50%) translateX(0);
+  transform: translateY(-58%) translateX(0);
 }
 
 .hero-photo {
@@ -369,7 +370,8 @@ nav.scrolled .nav-hamburger span { background: var(--green); }
   height: 100%;
   display: block;
   object-fit: cover;
-  object-position: center;
+  /* Show the house facade and roof, not just the lawn */
+  object-position: center 35%;
 }
 
 /* ---- ZOOM TRANSITION OVERLAY ---- */
