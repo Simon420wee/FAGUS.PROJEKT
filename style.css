@@ -220,6 +220,10 @@ nav.scrolled .nav-hamburger span { background: var(--green); }
   display: flex;
   align-items: center;
   overflow: hidden;
+  /* Padding accounts for fixed nav at top */
+  padding-top: 80px;
+  padding-bottom: 60px;
+  gap: 0;
 }
 
 /* Noise texture overlay */
@@ -232,7 +236,7 @@ nav.scrolled .nav-hamburger span { background: var(--green); }
   pointer-events: none;
 }
 
-/* Ground */
+/* Ground fade at bottom */
 #hero::after {
   content: '';
   position: absolute;
@@ -242,11 +246,13 @@ nav.scrolled .nav-hamburger span { background: var(--green); }
   pointer-events: none;
 }
 
+/* LEFT column — text content */
 .hero-content {
   position: relative;
   z-index: 2;
-  width: 50%;
-  padding: 0 5% 0 7%;
+  flex: 0 0 48%;
+  max-width: 48%;
+  padding: 0 4% 0 7%;
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.8s ease, transform 0.8s ease;
@@ -341,28 +347,29 @@ nav.scrolled .nav-hamburger span { background: var(--green); }
 }
 
 /* ============================================================
-   HERO VISUAL — real house photo, simple and stable
+   HERO VISUAL — RIGHT column, in flex flow with hero-content
    ============================================================ */
 .hero-visual {
-  position: absolute;
-  right: 0;
-  /* Anchor from top with nav offset — aligns with headline area */
-  top: 50%;
-  transform: translateY(-58%) translateX(40px);
-  width: 52%;
-  height: 78vh;
-  max-height: 700px;
-  min-height: 420px;
+  /* In-flow flex child — sits naturally next to text */
+  position: relative;
+  flex: 0 0 52%;
+  max-width: 52%;
+  /* Fill available hero height, respecting top/bottom padding */
+  height: calc(100vh - 140px);
+  max-height: 720px;
+  min-height: 400px;
+  align-self: center;
   border-radius: 28px 0 0 28px;
   overflow: hidden;
   z-index: 2;
   opacity: 0;
+  transform: translateX(40px);
   transition: opacity 1s ease 0.4s, transform 1s ease 0.4s;
   box-shadow: -12px 0 60px rgba(0,0,0,0.3);
 }
 .hero-visual.visible {
   opacity: 1;
-  transform: translateY(-58%) translateX(0);
+  transform: translateX(0);
 }
 
 .hero-photo {
@@ -370,8 +377,7 @@ nav.scrolled .nav-hamburger span { background: var(--green); }
   height: 100%;
   display: block;
   object-fit: cover;
-  /* Show the house facade and roof, not just the lawn */
-  object-position: center 35%;
+  object-position: center center;
 }
 
 /* ---- ZOOM TRANSITION OVERLAY ---- */
@@ -1110,28 +1116,33 @@ footer {
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
 
-  /* On mobile: content full width, image below as a banner */
+  /* Mobile: stack vertically — text on top, image below */
   .hero-content {
+    flex: none;
+    max-width: 100%;
     width: 100%;
-    padding: 120px 5% 340px;
-    position: relative;
-    z-index: 3;
+    padding: 40px 5% 36px;
   }
   .hero-visual {
+    flex: none;
+    max-width: 100%;
     width: 100%;
     height: 300px;
-    min-height: 280px;
-    top: auto;
-    bottom: 0;
-    right: 0;
-    transform: none;
+    min-height: 260px;
     border-radius: 0;
-    opacity: 0;
-    transition: opacity 1s ease 0.4s;
+    transform: none;
+    align-self: auto;
   }
   .hero-visual.visible {
-    opacity: 1;
     transform: none;
+  }
+  /* Stack hero vertically on mobile */
+  #hero {
+    flex-direction: column;
+    align-items: stretch;
+    padding-top: 80px;
+    padding-bottom: 0;
+    min-height: 100vh;
   }
 
   .about-grid { grid-template-columns: 1fr; gap: 48px; }
