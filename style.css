@@ -341,191 +341,35 @@ nav.scrolled .nav-hamburger span { background: var(--green); }
 }
 
 /* ============================================================
-   HERO VISUAL — photo container with pseudo-3D depth
+   HERO VISUAL — real house photo, simple and stable
    ============================================================ */
-
-/* Outer wrapper: absolutely positioned on the right, same as old .hero-house */
 .hero-visual {
   position: absolute;
   right: 0;
-  top: 0;
-  bottom: 0;
-  width: 54%;
+  top: 50%;
+  transform: translateY(-50%) translateX(40px);
+  width: 52%;
+  height: 76vh;
+  max-height: 680px;
+  min-height: 420px;
+  border-radius: 28px 0 0 28px;
+  overflow: hidden;
   z-index: 2;
   opacity: 0;
-  transform: translateX(40px);
   transition: opacity 1s ease 0.4s, transform 1s ease 0.4s;
-  display: flex;
-  align-items: center;
+  box-shadow: -12px 0 60px rgba(0,0,0,0.3);
 }
-.hero-visual.visible { opacity: 1; transform: translateX(0); }
-
-/* 3D scene — receives mouse-tilt transform via JS */
-.hero-visual-scene {
-  position: relative;
-  width: 100%;
-  height: 82vh;
-  max-height: 700px;
-  transform-style: preserve-3d;
-  /* Smooth tilt return */
-  transition: transform 0.08s linear;
-  will-change: transform;
+.hero-visual.visible {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
 }
 
-/* Soft warm glow behind the image — creates depth */
-.hero-visual-glow {
-  position: absolute;
-  inset: -30px;
-  background: radial-gradient(ellipse at 60% 50%,
-    rgba(200,169,110,0.18) 0%,
-    rgba(45,74,53,0.08) 50%,
-    transparent 75%);
-  filter: blur(24px);
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* Image frame — clipped, no overflow */
-.hero-visual-frame {
-  position: absolute;
-  inset: 0;
-  border-radius: 20px 0 0 20px; /* left-rounded, bleeds into right edge */
-  overflow: hidden;
-  z-index: 1;
-  /* Subtle inset shadow to lift it off the background */
-  box-shadow:
-    -20px 0 60px rgba(0,0,0,0.35),
-    0 40px 80px rgba(0,0,0,0.3),
-    inset -1px 0 0 rgba(200,169,110,0.15);
-}
-
-/* The house photo */
-.hero-visual-img {
+.hero-photo {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center 30%; /* show roof + façade, not just lawn */
   display: block;
-  /* Slight warm color treatment — matches the green/wood palette */
-  filter: brightness(0.92) saturate(1.08);
-  transition: transform 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              filter 0.4s ease;
-  will-change: transform;
-}
-
-/* Gentle Ken Burns entrance */
-@keyframes heroImgReveal {
-  from { transform: scale(1.06); }
-  to   { transform: scale(1.0); }
-}
-.hero-visual.visible .hero-visual-img {
-  animation: heroImgReveal 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-}
-
-/* Left edge fade — blends image into the dark green hero background */
-.hero-visual-fade-left {
-  position: absolute;
-  top: 0; left: 0; bottom: 0;
-  width: 38%;
-  background: linear-gradient(to right,
-    #2d4a35 0%,
-    rgba(45,74,53,0.7) 40%,
-    transparent 100%);
-  z-index: 2;
-  pointer-events: none;
-}
-
-/* Bottom fade — grounds the image, prevents hard cut */
-.hero-visual-fade-bottom {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 28%;
-  background: linear-gradient(to top,
-    rgba(20,35,22,0.75) 0%,
-    transparent 100%);
-  z-index: 2;
-  pointer-events: none;
-}
-
-/* Warm light flash — triggered by "Uđite u kuću" button */
-.hero-visual-light {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 50% 60%,
-    rgba(255,240,180,0.95) 0%,
-    rgba(255,210,100,0.6) 30%,
-    rgba(200,169,110,0.2) 65%,
-    transparent 100%);
-  opacity: 0;
-  z-index: 5;
-  pointer-events: none;
-  transition: opacity 0.5s ease;
-}
-.hero-visual-light.flash { opacity: 1; }
-
-/* Floating info badge */
-.hero-visual-badge {
-  position: absolute;
-  bottom: 28px;
-  left: 28px;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(10,20,12,0.72);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(200,169,110,0.3);
-  color: var(--wood-light);
-  padding: 8px 16px;
-  border-radius: 50px;
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 1px;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.6s ease 1.2s, transform 0.6s ease 1.2s;
-  pointer-events: none;
-}
-.hero-visual.visible .hero-visual-badge {
-  opacity: 1;
-  transform: translateY(0);
-}
-.hvb-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--wood-light);
-  animation: blink 2s ease-in-out infinite;
-  flex-shrink: 0;
-}
-
-/* Corner accent lines — architectural detail */
-.hero-visual-corner-tl,
-.hero-visual-corner-br {
-  position: absolute;
-  z-index: 10;
-  pointer-events: none;
-}
-.hero-visual-corner-tl {
-  top: 16px; left: 16px;
-  width: 32px; height: 32px;
-  border-top: 2px solid rgba(200,169,110,0.5);
-  border-left: 2px solid rgba(200,169,110,0.5);
-  border-radius: 4px 0 0 0;
-  opacity: 0;
-  transition: opacity 0.6s ease 1.4s;
-}
-.hero-visual-corner-br {
-  bottom: 16px; right: 16px;
-  width: 32px; height: 32px;
-  border-bottom: 2px solid rgba(200,169,110,0.5);
-  border-right: 2px solid rgba(200,169,110,0.5);
-  border-radius: 0 0 4px 0;
-  opacity: 0;
-  transition: opacity 0.6s ease 1.6s;
-}
-.hero-visual.visible .hero-visual-corner-tl,
-.hero-visual.visible .hero-visual-corner-br {
-  opacity: 1;
+  object-fit: cover;
+  object-position: center;
 }
 
 /* ---- ZOOM TRANSITION OVERLAY ---- */
@@ -1264,42 +1108,29 @@ footer {
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
 
-  /* On mobile: hero stacks — content full width on top, image behind/below */
+  /* On mobile: content full width, image below as a banner */
   .hero-content {
     width: 100%;
-    padding: 120px 5% 52%;
+    padding: 120px 5% 340px;
     position: relative;
     z-index: 3;
   }
   .hero-visual {
     width: 100%;
-    height: 52%;
+    height: 300px;
+    min-height: 280px;
     top: auto;
     bottom: 0;
     right: 0;
-  }
-  .hero-visual-scene {
-    height: 100%;
-    max-height: none;
-  }
-  .hero-visual-frame {
+    transform: none;
     border-radius: 0;
+    opacity: 0;
+    transition: opacity 1s ease 0.4s;
   }
-  /* On mobile the left fade isn't needed — use top fade instead */
-  .hero-visual-fade-left {
-    display: none;
+  .hero-visual.visible {
+    opacity: 1;
+    transform: none;
   }
-  /* Strong top fade to blend into content area */
-  .hero-visual-frame::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 45%;
-    background: linear-gradient(to bottom, #2d4a35 0%, transparent 100%);
-    z-index: 2;
-    pointer-events: none;
-  }
-  .hero-visual-badge { bottom: 16px; left: 16px; }
 
   .about-grid { grid-template-columns: 1fr; gap: 48px; }
   .about-stat-bar { flex-wrap: wrap; gap: 20px; justify-content: center; }
